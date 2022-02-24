@@ -1,0 +1,53 @@
+#!/usr/bin/env ash
+
+usage() {
+    cat <<EOF
+
+usage: ${0##*/} [flags]
+
+  Options:
+
+	--xfce -x          xfce desktop.
+	--gnome  -g           gnome desktop.
+
+* Alpine-Setup NillyTheL0L 2022-2022
+
+EOF
+}
+
+[[ -z $1 ]] && {
+    usage
+    exit 1
+}
+xfce(){
+
+echo Hello $USERNAME lets install xfce && apk update && setup-xorg-base xfce4 xfce4-terminal lightdm-gtk-greeter xfce4-screensaver faenza-icon-theme dbus-x11 sudo polkit consolekit2 gvfs-fuse gvfs-smb fuse-openrc thunar-volman udisks2 && rc-update add dbus && rc-update add lightdm && rc-update add fuse && echo rebooting. && echo rebooting.. && echo rebooting... && echo rebooting. && echo rebooting.. && reboot  
+	
+}
+
+gnome(){
+
+echo Hello $USERNAME lets install gnome && apk update && setup-xorg-base gnome gnome-desktop dbus-x11 sudo nano mesa-dri-swrast && rc-update add gdm && rc-update add udev && rc-update add udev-trigger && rc-update add udev-settle && apk add fstrim losetup agetty && apk add gnome-apps && echo rebooting. && echo rebooting.. && echo rebooting... && echo rebooting. && echo rebooting.. && reboot
+	
+}
+
+
+cat <<EOF
+Alpine Desktop v3.4.1
+                                  NillyTheL0L - 2022-2022                
+EOF
+
+while [[ "$1" ]]; do
+    read -s -n 1 -p "Do you want to continue?[y/N]: "
+    [[ "$REPLY" == "y" ||  "$REPLY" == "Y" ]] && {
+         echo
+         case "$1" in
+            --xfce|-x) xfce;;
+            --gnome|-g) gnome;;
+        esac
+        shift
+    } || {
+        printf "\nBye\n" "%s" && exit 0
+    }
+
+done
